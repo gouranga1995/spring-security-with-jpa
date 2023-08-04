@@ -22,7 +22,7 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         Optional<Users> user=userRepo.findByUserName(s);
         user.orElseThrow(()->new BadCredentialsException("user/password incorrect"));
-        return new MyUserDetails(s,user.get().getPassword());
+        return new MyUserDetails(user.get());
     }
 
 

@@ -3,24 +3,27 @@ package com.example.gouranga.springsessionjdbc.entity;
 import com.example.gouranga.springsessionjdbc.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.*;
 
 public class MyUserDetails implements UserDetails {
 
-
     private String userName;
     private String password;
+    private List<GrantedAuthority> authorities;
 
-    public MyUserDetails(String userName, String password) {
-        this.userName = userName;
-        this.password = password;
+    public MyUserDetails(Users user) {
+        this.userName=user.getUserName();
+        this.password = user.getPassword();
+        this.authorities=List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
     }
 
     @Override
